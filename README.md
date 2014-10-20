@@ -5,7 +5,7 @@ A Node.js app using [Express 4](http://expressjs.com/).
 ## Running Locally
 
 ```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
+$ git clone git@github.com:DavidMao/firststeps.git
 $ cd node-js-getting-started
 $ npm install
 $ npm start
