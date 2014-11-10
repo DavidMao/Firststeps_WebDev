@@ -1,13 +1,31 @@
-var express = require('express')
-var app = express();
+var app = require("http").createServer(createServer);
+var fs = require('fs');
+var url = require('url');
+var port = process.env.PORT || 5000
 
-app.set('port', (process.env.PORT || 5000))
-app.use(express.static(__dirname + '/public'))
+function createServer(req, res) {
+    var path = url.parse(req.url).pathname;
+    var fsCallback = function(error, data) {
+        if(error) throw error;
 
-app.get('/', function(request, response) {
-  response.send('Hello! This is David\'s Homepage!')
-})
+        res.writeHead(200);
+        res.write(data);
+        res.end();
+    }
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'))
+    switch(path) {
+        case '/':
+            doc = fs.readFile(__dirname + '/source/index.html', fsCallback);
+		break;
+        case '/morning':
+            doc = fs.readFile(__dirname + '/source/morning/morning.html', fsCallback);
+        break;
+        default:
+            doc = fs.readFile(__dirname + '/source/notFound.html', fsCallback);
+        break;
+	}
+}
+
+app.listen(port, function() {
+  console.log("Node app is running at localhost:" + port)
 })
