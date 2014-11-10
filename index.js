@@ -20,6 +20,9 @@ function createServer(req, res) {
         case '/morning':
             doc = fs.readFile(__dirname + '/source/morning/morning.html', fsCallback);
         break;
+        case '/jiayi':
+            doc = fs.readFile(__dirname + '/source/jiayi.html', fsCallback);
+        break;
         default:
             doc = fs.readFile(__dirname + '/source/notFound.html', fsCallback);
         break;
