@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Helvetica Neue", helvetica, arial;
+        padding: 15px;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      ul li {
+        line-height: 1.4;
+      }
+    </style>
+  </head>
+  <body>
+        
+    <h1>Weather</h1>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $.ajax({
+          url: "https://api.forecast.io/forecast/6d05918df78bd79bb525d1ceb521cb63/47.61167908,-122.33325958",
+          dataType: "jsonp",
+          success: function(json) {
+
+            // debug
+            console.log(json);
+            
+            var currRaw = json.currently;
+            var hourlyRaw = json.hourly.data;
+            var dailyRaw = json.daily.data;
+
+            // CURRENTLY
+            displayCurrently(currRaw, dailyRaw[0]);
+            
+            // HOURLY
+            displayHourly(hourlyRaw);
+
+            // DAILY
+            displayDaily(dailyRaw);
+          }
+        });
+      });
+
+      function convertEpoch(epoch) {
+        var date = new Date(parseFloat(epoch + "000"));
+        var readableDate = date.getMonth() + 1 + "." +
+            date.getDate() + "." +
+            date.getFullYear();
+        var hoursRaw = date.getHours();
+        var hours = ((hoursRaw+11) % 12) + 1;
+        var amPm = date.getHours() > 11 ? 'PM' : 'AM';
+        var rawMin = date.getMinutes();
+        var minutes = rawMin > 9 ? rawMin : '0' + rawMin;
+        var readableTime = hours + ":" + minutes + amPm;
+
+        var weekdayShort = new Array(7);
+        weekdayShort[0]=  "Sun";
+        weekdayShort[1] = "Mon";
+        weekdayShort[2] = "Tues";
+        weekdayShort[3] = "Wed";
+        weekdayShort[4] = "Thurs";
+        weekdayShort[5] = "Fri";
+        weekdayShort[6] = "Sat";
+
+        var weekdayLong = new Array(7);
+        weekdayLong[0]=  "Sunday";
+        weekdayLong[1] = "Monday";
+        weekdayLong[2] = "Tuesday";
+        weekdayLong[3] = "Wednesday";
+        weekdayLong[4] = "Thursday";
+        weekdayLong[5] = "Friday";
+        weekdayLong[6] = "Saturday";
+
+        var dateTime = new Object();
+        dateTime['date'] = readableDate;
+        dateTime['time'] = readableTime;
+        dateTime['hours'] = hours + amPm;
+        dateTime['dayShort'] = weekdayShort[date.getDay()];
+        dateTime['dayLong'] = weekdayLong[date.getDay()];
+
+        return dateTime;
+      }
+
+      function displayCurrently(currRaw, dailyRaw) {
+        var dateTime = convertEpoch(currRaw.time);
+        var currIcon = currRaw.icon;
+        var currTime = dateTime['dayLong'] + " " + dateTime['date'];
+        var currSummary = currRaw.summary;
+        var currTemp = Math.round(currRaw.temperature*10)/10 + '&#176;F';
+        var currAppTemp = Math.round(currRaw.apparentTemperature*10)/10 + '&#176;F';
+        var currPrecipProbInt = Math.round(currRaw.precipProbability * 100);
+        var currPrecipProb = currPrecipProbInt + '%';
+        var currPrecipIntense = Math.round(currRaw.precipIntensity*1000)/1000;
+        var currPrecipType = (currPrecipProbInt > 0) ? currRaw.precipType : "none";
+        var currWindSpeed = Math.round(currRaw.windSpeed*100)/100;
+        var sunriseTime = convertEpoch(dailyRaw.sunriseTime)['time'];
+        var sunsetTime = convertEpoch(dailyRaw.sunsetTime)['time'];
+
+        document.getElementById("Curr_Icon").innerHTML = "Icon: " + currIcon;
+        document.getElementById("Curr_Time").innerHTML = "Time: " + currTime;
+        document.getElementById("Curr_Summary").innerHTML = "Summary: " + currSummary;
+        document.getElementById("Curr_Temp").innerHTML = "Temp: " + currTemp;
+        document.getElementById("Curr_ApparentTemp").innerHTML = "Feels like: " + currAppTemp;
+        document.getElementById("Curr_PrecipProb").innerHTML = "Precipitation: " + currPrecipProb;
+        if (currPrecipProbInt > 0) {
+          document.getElementById("Curr_PrecipType").innerHTML = "Precipitation Type: " + currPrecipType;
+          document.getElementById("Curr_PrecipIntensity").innerHTML = "Precipitation Intensity: " + currPrecipIntense;
+        }
+        document.getElementById("Curr_WindSpeed").innerHTML = "Wind Speed: " + currWindSpeed;
+        document.getElementById("SunriseTime").innerHTML = "Sunrise Time: " + sunriseTime;
+        document.getElementById("SunsetTime").innerHTML = "Sunset Time: " + sunsetTime;
+      }
+
+      function displayHourly(hourlyRaw) {
+        var hourlyHourArray = new Array();
+        var hourlyTempArray = new Array();
+        var hourlyPrecipProbArray = new Array();
+        var hourlyPrecipTypeArray = new Array();
+
+        for (var i = 0; i <= 21; i=i+3) {
+          hourlyHourArray.push(convertEpoch(hourlyRaw[i].time)['hours']);
+          hourlyTempArray.push(Math.round(hourlyRaw[i].apparentTemperature*10)/10 + '&#176;F');
+          var hourlyPrecipProb = Math.round(hourlyRaw[i].precipProbability * 100);
+          hourlyPrecipTypeArray.push((hourlyPrecipProb > 0) ? hourlyRaw[i].precipType : "none");
+          hourlyPrecipProb += '%';
+          hourlyPrecipProbArray.push(hourlyPrecipProb);
+        }
+
+        var r = new Array(), j = -1;
+        r[++j] = '<tr>';
+        for (var i = 0; i < hourlyHourArray.length; i++) {
+          r[++j] = '<td>' + hourlyHourArray[i] + '</td>';              
+        }
+        r[++j] = '</tr><tr>';
+        for (var i = 0; i < hourlyTempArray.length; i++) {
+          r[++j] = '<td>' + hourlyTempArray[i] + '</td>';              
+        }
+        r[++j] = '</tr><tr>';
+        for (var i = 0; i < hourlyPrecipProbArray.length; i++) {
+          r[++j] = '<td>' + hourlyPrecipProbArray[i] + '</td>';              
+        }
+        r[++j] = '</tr>';
+        $('#hourlyConditions').html(r.join(''));
+      }
+
+      function displayDaily(dailyRaw) {
+        var dailyDayArray = new Array();
+        var dailyIconArray = new Array();
+        var dailyTempHighArray = new Array();
+        var dailyTempLowArray = new Array();
+        var dailyPrecipProbArray = new Array();
+        var dailyPrecipTypeArray = new Array();
+
+        for (var i = 0; i < dailyRaw.length; i++) {
+          dailyDayArray.push(convertEpoch(dailyRaw[i].time)['dayShort']);
+          dailyIconArray.push(dailyRaw[i].icon);
+          dailyTempHighArray.push(Math.round(dailyRaw[i].apparentTemperatureMax*10)/10 + '&#176;F');
+          dailyTempLowArray.push(Math.round(dailyRaw[i].apparentTemperatureMin*10)/10 + '&#176;F');
+          var dailyPrecipProb = Math.round(dailyRaw[i].precipProbability * 100);
+          dailyPrecipTypeArray.push((dailyPrecipProb > 0) ? dailyRaw[i].precipType : "none");
+          dailyPrecipProb += '%';
+          dailyPrecipProbArray.push(dailyPrecipProb);
+        }
+
+        var r = new Array(), j = -1;
+        r[++j] = '<tr>';
+        for (var i = 0; i < dailyDayArray.length; i++) {
+          r[++j] = '<td>' + dailyDayArray[i] + '</td>';              
+        }
+        r[++j] = '</tr><tr>';
+        for (var i = 0; i < dailyIconArray.length; i++) {
+          r[++j] = '<td>' + dailyIconArray[i] + '</td>';              
+        }
+        r[++j] = '</tr><tr>';
+        for (var i = 0; i < dailyPrecipProbArray.length; i++) {
+          r[++j] = '<td>' + dailyPrecipProbArray[i] + '</td>';              
+        }
+        r[++j] = '</tr><tr>';
+        for (var i = 0; i < dailyTempHighArray.length; i++) {
+          r[++j] = '<td>' + dailyTempHighArray[i] + '</td>';              
+        }
+        r[++j] = '</tr><tr>';
+        for (var i = 0; i < dailyTempLowArray.length; i++) {
+          r[++j] = '<td>' + dailyTempLowArray[i] + '</td>';              
+        }
+        r[++j] = '</tr>';
+        $('#dailyConditions').html(r.join(''));
+      }
+
+    </script>
+
+    <div id="Currently">
+      <h2>Current Conditions</h2>
+      <p id="Curr_Icon"></p>
+      <p id="Curr_Time"></p>
+      <p id="Curr_Summary"></p>
+      <p id="Curr_Temp"></p>
+      <p id="Curr_ApparentTemp"></p>
+      <p id="Curr_PrecipProb"></p>
+      <p id="Curr_PrecipType"></p>
+      <p id="Curr_PrecipIntensity"></p>
+      <p id="Curr_WindSpeed"></p>
+      <p id="SunriseTime"></p>
+      <p id="SunsetTime"></p>
+    </div>
+
+    <div id="Hourly">
+      <h2>Hourly Conditions</h2>
+      <table id="hourlyConditions"></table>
+    </div>
+
+    <div id="Daily">
+      <h2>Daily Forecast</h2>
+      <table id="dailyConditions"></table>
+    </div>
+    <p id="json"></p>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
