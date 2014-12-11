@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+
+    <meta charset="utf-8">
+    <!-- bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
-      body {
+
+      body { /*Overwritten by bootstrap*/
         font-family: "Helvetica Neue", helvetica, arial;
         padding: 15px;
+
+        /*From FTW*/
+        overflow:hidden;
+        <!-- for white color:#fff; -->
+        letter-spacing:0;
+        <!-- background: url('../img/bg.jpg') no-repeat center center fixed; -->
+        text-align: center;
+      }
+
+      #Curr_Temp {
+        font-size:500%;
+      }
+
+      .tableDisplay {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+
+      #hourlyConditions {
+        border-collapse:separate;
+        border-spacing:30px;
+      }
+
+      #dailyConditions {
+        border-collapse:separate;
+        border-spacing:10px;
       }
 
       ul {
@@ -16,24 +49,40 @@
       ul li {
         line-height: 1.4;
       }
+
     </style>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <!-- Optional: Incorporate the Bootstrap JavaScript plugins -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- Skycons -->
+    <script src="https://rawgit.com/darkskyapp/skycons/master/skycons.js"></script>
+
   </head>
   <body>
-        
-    <h1>Weather</h1>
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 
     <script type="text/javascript">
+
+      var apiKey = '6d05918df78bd79bb525d1ceb521cb63';
+      var lati = 47.61167908;
+      var longi = -122.33325958;
+
+      var skycons = new Skycons({
+        "color": "#000000"
+      });
+
       jQuery(document).ready(function($) {
         $.ajax({
-          url: "https://api.forecast.io/forecast/6d05918df78bd79bb525d1ceb521cb63/47.61167908,-122.33325958",
+          url: 'https://api.forecast.io/forecast/' + apiKey + '/' + lati + ',' + longi,
           dataType: "jsonp",
           success: function(json) {
 
             // debug
             console.log(json);
-            
+
             var currRaw = json.currently;
             var hourlyRaw = json.hourly.data;
             var dailyRaw = json.daily.data;
@@ -49,6 +98,8 @@
           }
         });
       });
+
+      skycons.play();
 
       function convertEpoch(epoch) {
         var date = new Date(parseFloat(epoch + "000"));
@@ -72,13 +123,13 @@
         weekdayShort[6] = "Sat";
 
         var weekdayLong = new Array(7);
-        weekdayLong[0]=  "Sunday";
-        weekdayLong[1] = "Monday";
-        weekdayLong[2] = "Tuesday";
-        weekdayLong[3] = "Wednesday";
-        weekdayLong[4] = "Thursday";
-        weekdayLong[5] = "Friday";
-        weekdayLong[6] = "Saturday";
+        weekdayLong[0]=  "SUNDAY";
+        weekdayLong[1] = "MONDAY";
+        weekdayLong[2] = "TUESDAY";
+        weekdayLong[3] = "WEDNESDAY";
+        weekdayLong[4] = "THURSDAY";
+        weekdayLong[5] = "FRIDAY";
+        weekdayLong[6] = "SATURDAY";
 
         var dateTime = new Object();
         dateTime['date'] = readableDate;
@@ -95,29 +146,40 @@
         var currIcon = currRaw.icon;
         var currTime = dateTime['dayLong'] + " " + dateTime['date'];
         var currSummary = currRaw.summary;
-        var currTemp = Math.round(currRaw.temperature*10)/10 + '&#176;F';
+        var currTemp = Math.round(currRaw.temperature) + '&#176;F';
         var currAppTemp = Math.round(currRaw.apparentTemperature*10)/10 + '&#176;F';
         var currPrecipProbInt = Math.round(currRaw.precipProbability * 100);
         var currPrecipProb = currPrecipProbInt + '%';
-        var currPrecipIntense = Math.round(currRaw.precipIntensity*1000)/1000;
+        var currPrecipIntensity = Math.round(currRaw.precipIntensity*1000)/1000;
         var currPrecipType = (currPrecipProbInt > 0) ? currRaw.precipType : "none";
-        var currWindSpeed = Math.round(currRaw.windSpeed*100)/100;
+        var currWindSpeed = Math.round(currRaw.windSpeed*100)/100 + "MPH";
         var sunriseTime = convertEpoch(dailyRaw.sunriseTime)['time'];
         var sunsetTime = convertEpoch(dailyRaw.sunsetTime)['time'];
 
-        document.getElementById("Curr_Icon").innerHTML = "Icon: " + currIcon;
-        document.getElementById("Curr_Time").innerHTML = "Time: " + currTime;
-        document.getElementById("Curr_Summary").innerHTML = "Summary: " + currSummary;
-        document.getElementById("Curr_Temp").innerHTML = "Temp: " + currTemp;
-        document.getElementById("Curr_ApparentTemp").innerHTML = "Feels like: " + currAppTemp;
-        document.getElementById("Curr_PrecipProb").innerHTML = "Precipitation: " + currPrecipProb;
+        skycons.set( 'icon', currIcon);
+
+        document.getElementById("Curr_DateTime").innerHTML = currTime;
+        document.getElementById("Curr_Summary").innerHTML = currSummary;
+        document.getElementById("Curr_Temp").innerHTML = currTemp;
+
+        document.getElementById("Curr_ApparentTempLabel").innerHTML = "Feels like: ";
+        document.getElementById("Curr_ApparentTemp").innerHTML = currAppTemp;
+
+        document.getElementById("Curr_PrecipProbLabel").innerHTML = "Precipitation: ";
+        document.getElementById("Curr_PrecipProb").innerHTML = currPrecipProb;
+
         if (currPrecipProbInt > 0) {
-          document.getElementById("Curr_PrecipType").innerHTML = "Precipitation Type: " + currPrecipType;
-          document.getElementById("Curr_PrecipIntensity").innerHTML = "Precipitation Intensity: " + currPrecipIntense;
+          document.getElementById("Curr_PrecipTypeLabel").innerHTML = "  Type: ";
+          document.getElementById("Curr_PrecipType").innerHTML = currPrecipType;
+
+          document.getElementById("Curr_PrecipIntensityLabel").innerHTML = "  Intensity: ";
+          document.getElementById("Curr_PrecipIntensity").innerHTML = currPrecipIntensity;
         }
-        document.getElementById("Curr_WindSpeed").innerHTML = "Wind Speed: " + currWindSpeed;
-        document.getElementById("SunriseTime").innerHTML = "Sunrise Time: " + sunriseTime;
-        document.getElementById("SunsetTime").innerHTML = "Sunset Time: " + sunsetTime;
+        document.getElementById("Curr_WindSpeedLabel").innerHTML = "Wind Speed: ";
+        document.getElementById("Curr_WindSpeed").innerHTML = currWindSpeed;
+
+        document.getElementById("SunRiseSetTimeLabel").innerHTML = "Sunrise | Sunset: ";
+        document.getElementById("SunRiseSetTime").innerHTML = sunriseTime + " | " + sunsetTime;
       }
 
       function displayHourly(hourlyRaw) {
@@ -128,7 +190,7 @@
 
         for (var i = 0; i <= 21; i=i+3) {
           hourlyHourArray.push(convertEpoch(hourlyRaw[i].time)['hours']);
-          hourlyTempArray.push(Math.round(hourlyRaw[i].apparentTemperature*10)/10 + '&#176;F');
+          hourlyTempArray.push(Math.round(hourlyRaw[i].apparentTemperature) + '&#176;F');
           var hourlyPrecipProb = Math.round(hourlyRaw[i].precipProbability * 100);
           hourlyPrecipTypeArray.push((hourlyPrecipProb > 0) ? hourlyRaw[i].precipType : "none");
           hourlyPrecipProb += '%';
@@ -163,68 +225,117 @@
         for (var i = 0; i < dailyRaw.length; i++) {
           dailyDayArray.push(convertEpoch(dailyRaw[i].time)['dayShort']);
           dailyIconArray.push(dailyRaw[i].icon);
-          dailyTempHighArray.push(Math.round(dailyRaw[i].apparentTemperatureMax*10)/10 + '&#176;F');
-          dailyTempLowArray.push(Math.round(dailyRaw[i].apparentTemperatureMin*10)/10 + '&#176;F');
+          dailyTempHighArray.push(Math.round(dailyRaw[i].apparentTemperatureMax) + '&#176;F');
+          dailyTempLowArray.push(Math.round(dailyRaw[i].apparentTemperatureMin) + '&#176;F');
           var dailyPrecipProb = Math.round(dailyRaw[i].precipProbability * 100);
           dailyPrecipTypeArray.push((dailyPrecipProb > 0) ? dailyRaw[i].precipType : "none");
           dailyPrecipProb += '%';
           dailyPrecipProbArray.push(dailyPrecipProb);
         }
 
+        var DAILY_ICON_TEXT = "dailyIcon";
+        var dailyArrayLength = dailyDayArray.length;
+
         var r = new Array(), j = -1;
         r[++j] = '<tr>';
-        for (var i = 0; i < dailyDayArray.length; i++) {
+        for (var i = 0; i < dailyArrayLength; i++) {
           r[++j] = '<td>' + dailyDayArray[i] + '</td>';              
         }
         r[++j] = '</tr><tr>';
-        for (var i = 0; i < dailyIconArray.length; i++) {
-          r[++j] = '<td>' + dailyIconArray[i] + '</td>';              
+        for (var i = 0; i < dailyArrayLength; i++) {
+          r[++j] = '<td><canvas id="' + DAILY_ICON_TEXT + i + '"width="50" height="50"></canvas></td>';              
         }
         r[++j] = '</tr><tr>';
-        for (var i = 0; i < dailyPrecipProbArray.length; i++) {
-          r[++j] = '<td>' + dailyPrecipProbArray[i] + '</td>';              
+        for (var i = 0; i < dailyArrayLength; i++) {
+          r[++j] = '<td>' + dailyTempHighArray[i] + " | " + dailyPrecipProbArray[i] + '</td>';              
         }
-        r[++j] = '</tr><tr>';
-        for (var i = 0; i < dailyTempHighArray.length; i++) {
-          r[++j] = '<td>' + dailyTempHighArray[i] + '</td>';              
-        }
-        r[++j] = '</tr><tr>';
-        for (var i = 0; i < dailyTempLowArray.length; i++) {
-          r[++j] = '<td>' + dailyTempLowArray[i] + '</td>';              
-        }
+        // r[++j] = '</tr><tr>';
+        // for (var i = 0; i < dailyTempHighArray.length; i++) {
+        //   r[++j] = '<td>' + dailyTempHighArray[i] + '</td>';              
+        // }
+        // r[++j] = '</tr><tr>';
+        // for (var i = 0; i < dailyTempLowArray.length; i++) {
+        //   r[++j] = '<td>' + dailyTempLowArray[i] + '</td>';              
+        // }
         r[++j] = '</tr>';
         $('#dailyConditions').html(r.join(''));
+
+        for (var i = 0; i < dailyArrayLength; i++) {
+          skycons.set(DAILY_ICON_TEXT+i, dailyIconArray[i]);          
+        }
       }
 
     </script>
 
-    <div id="Currently">
-      <h2>Current Conditions</h2>
-      <p id="Curr_Icon"></p>
-      <p id="Curr_Time"></p>
-      <p id="Curr_Summary"></p>
-      <p id="Curr_Temp"></p>
-      <p id="Curr_ApparentTemp"></p>
-      <p id="Curr_PrecipProb"></p>
-      <p id="Curr_PrecipType"></p>
-      <p id="Curr_PrecipIntensity"></p>
-      <p id="Curr_WindSpeed"></p>
-      <p id="SunriseTime"></p>
-      <p id="SunsetTime"></p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6" style="background-color:lavender;">
+          <h3 class="text-left">SEATTLE. WASHINGTON</h3>
+        </div>
+        <div class="col-md-6" style="background-color:lavenderblush;">
+          <h3 class="text-right" id="Curr_DateTime"> </h3>
+        </div>
+      </div>
     </div>
 
-    <div id="Hourly">
-      <h2>Hourly Conditions</h2>
-      <table id="hourlyConditions"></table>
+    <div class="container">
+      <div class="row" id="Currently">
+
+        <div class="col-md-4" style="background-color:lightblue;">
+          <canvas id="icon" width="200" height="200"></canvas>
+        </div>
+
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-6" style="background-color:pink;">
+              <p class="text-left" id="Curr_Summary"></p>
+            </div>
+          </div>
+
+          <div class="col-md-4" style="background-color:lightgreen;">
+            <h1 class="text-center" id="Curr_Temp"></p>
+          </div>
+
+          <div class="col-md-3" style="background-color:lightcyan;">
+            <p id="Curr_ApparentTempLabel"></p>
+            <p id="Curr_PrecipProbLabel"></p>
+            <p id="Curr_PrecipTypeLabel"></p>
+            <p id="Curr_PrecipIntensityLabel"></p>
+            <p id="Curr_WindSpeedLabel"></p>
+            <p id="SunRiseSetTimeLabel"></p>
+          </div>
+
+          <div class="col-md-5" style="background-color:lightgrey;">
+            <p id="Curr_ApparentTemp"></p>
+            <p id="Curr_PrecipProb"></p>
+            <p id="Curr_PrecipType"></p>
+            <p id="Curr_PrecipIntensity"></p>
+            <p id="Curr_WindSpeed"></p>
+            <p id="SunRiseSetTime"></p>
+          </div>
+        </div>
+      </div> <!-- End Currently -->
+      
+      <div id="Hourly">
+        <h2 class="text-center">Hourly Conditions</h2>
+          <table class="tableDisplay" id="hourlyConditions"></table>
+      </div> <!-- End Hourly -->
+
+      <div id="Daily">
+        <h2 class="text-center">Daily Forecast</h2>
+        <table class="tableDisplay" id="dailyConditions"></table>
+      </div> <!-- End Daily -->
+
     </div>
 
-    <div id="Daily">
-      <h2>Daily Forecast</h2>
-      <table id="dailyConditions"></table>
-    </div>
-    <p id="json"></p>
   </body>
 </html>
+
+
+
+
+
+
 
 
 
