@@ -6,22 +6,47 @@
     <!-- bootstrap -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <!-- Optional: Incorporate the Bootstrap JavaScript plugins -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- Skycons -->
+    <script src="https://rawgit.com/darkskyapp/skycons/master/skycons.js"></script>
+
     <style>
 
-      body { /*Overwritten by bootstrap*/
-        font-family: "Helvetica Neue", helvetica, arial;
+      body {
+        font-family: "Calibri";
+        letter-spacing: 1px;
         padding: 15px;
 
         /*From FTW*/
-        overflow:hidden;
-        <!-- for white color:#fff; -->
-        letter-spacing:0;
+        /*overflow:hidden;*/
+        /*for white color:#fff;*/
         <!-- background: url('../img/bg.jpg') no-repeat center center fixed; -->
         text-align: center;
       }
 
+      h3 {
+        letter-spacing: 5px;
+      }
+
+      #Curr_WeatherIcon {
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+
       #Curr_Temp {
-        font-size:500%;
+        font-size:600%;
+      }
+
+      #Curr_Summary {
+        font-size:125%;
       }
 
       .tableDisplay {
@@ -30,14 +55,27 @@
         text-align: center;
       }
 
+      #tableHead {
+        border-bottom: 1px solid #000;
+        /*padding: 0px 0px 50px 0px;*/
+      }
+
       #hourlyConditions {
         border-collapse:separate;
-        border-spacing:30px;
+        border-spacing:0px 5px;
+      }
+
+      #hourlyConditions td {
+        padding: 0px 15px 0px 15px;
       }
 
       #dailyConditions {
         border-collapse:separate;
-        border-spacing:10px;
+        border-spacing:0px 5px;
+      }
+
+      #dailyConditions td {
+        padding: 0px 7px 0px 7px;
       }
 
       ul {
@@ -51,15 +89,6 @@
       }
 
     </style>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <!-- jQuery -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <!-- Optional: Incorporate the Bootstrap JavaScript plugins -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <!-- Skycons -->
-    <script src="https://rawgit.com/darkskyapp/skycons/master/skycons.js"></script>
 
   </head>
   <body>
@@ -81,7 +110,7 @@
           success: function(json) {
 
             // debug
-            console.log(json);
+            // console.log(json);
 
             var currRaw = json.currently;
             var hourlyRaw = json.hourly.data;
@@ -156,7 +185,7 @@
         var sunriseTime = convertEpoch(dailyRaw.sunriseTime)['time'];
         var sunsetTime = convertEpoch(dailyRaw.sunsetTime)['time'];
 
-        skycons.set( 'icon', currIcon);
+        skycons.set( 'Curr_WeatherIcon', currIcon);
 
         document.getElementById("Curr_DateTime").innerHTML = currTime;
         document.getElementById("Curr_Summary").innerHTML = currSummary;
@@ -200,15 +229,15 @@
         var r = new Array(), j = -1;
         r[++j] = '<tr>';
         for (var i = 0; i < hourlyHourArray.length; i++) {
-          r[++j] = '<td>' + hourlyHourArray[i] + '</td>';              
+          r[++j] = '<td id="tableHead">' + hourlyHourArray[i] + '</td>';
         }
         r[++j] = '</tr><tr>';
         for (var i = 0; i < hourlyTempArray.length; i++) {
-          r[++j] = '<td>' + hourlyTempArray[i] + '</td>';              
+          r[++j] = '<td>' + hourlyTempArray[i] + '</td>';
         }
         r[++j] = '</tr><tr>';
         for (var i = 0; i < hourlyPrecipProbArray.length; i++) {
-          r[++j] = '<td>' + hourlyPrecipProbArray[i] + '</td>';              
+          r[++j] = '<td>' + hourlyPrecipProbArray[i] + '</td>';
         }
         r[++j] = '</tr>';
         $('#hourlyConditions').html(r.join(''));
@@ -239,23 +268,23 @@
         var r = new Array(), j = -1;
         r[++j] = '<tr>';
         for (var i = 0; i < dailyArrayLength; i++) {
-          r[++j] = '<td>' + dailyDayArray[i] + '</td>';              
+          r[++j] = '<td id="tableHead">' + dailyDayArray[i] + '</td>';
         }
         r[++j] = '</tr><tr>';
         for (var i = 0; i < dailyArrayLength; i++) {
-          r[++j] = '<td><canvas id="' + DAILY_ICON_TEXT + i + '"width="50" height="50"></canvas></td>';              
+          r[++j] = '<td><canvas id="' + DAILY_ICON_TEXT + i + '"width="50" height="50"></canvas></td>';
         }
         r[++j] = '</tr><tr>';
         for (var i = 0; i < dailyArrayLength; i++) {
-          r[++j] = '<td>' + dailyTempHighArray[i] + " | " + dailyPrecipProbArray[i] + '</td>';              
+          r[++j] = '<td>' + dailyTempHighArray[i] + " | " + dailyPrecipProbArray[i] + '</td>';
         }
         // r[++j] = '</tr><tr>';
         // for (var i = 0; i < dailyTempHighArray.length; i++) {
-        //   r[++j] = '<td>' + dailyTempHighArray[i] + '</td>';              
+        //   r[++j] = '<td>' + dailyTempHighArray[i] + '</td>';
         // }
         // r[++j] = '</tr><tr>';
         // for (var i = 0; i < dailyTempLowArray.length; i++) {
-        //   r[++j] = '<td>' + dailyTempLowArray[i] + '</td>';              
+        //   r[++j] = '<td>' + dailyTempLowArray[i] + '</td>';
         // }
         r[++j] = '</tr>';
         $('#dailyConditions').html(r.join(''));
@@ -269,10 +298,10 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6" style="background-color:lavender;">
+        <div class="col-sm-6 col-md-6">
           <h3 class="text-left">SEATTLE. WASHINGTON</h3>
         </div>
-        <div class="col-md-6" style="background-color:lavenderblush;">
+        <div class="col-sm-6 col-md-6">
           <h3 class="text-right" id="Curr_DateTime"> </h3>
         </div>
       </div>
@@ -281,22 +310,26 @@
     <div class="container">
       <div class="row" id="Currently">
 
-        <div class="col-md-4" style="background-color:lightblue;">
-          <canvas id="icon" width="200" height="200"></canvas>
+        <div class="col-md-1">
+        </div>
+
+        <div class="col-md-3">
+          <canvas id="Curr_WeatherIcon" display="inline" width="200" height="200"></canvas>
         </div>
 
         <div class="col-md-8">
           <div class="row">
-            <div class="col-md-6" style="background-color:pink;">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
               <p class="text-left" id="Curr_Summary"></p>
             </div>
           </div>
 
-          <div class="col-md-4" style="background-color:lightgreen;">
+          <div class="col-md-4">
             <h1 class="text-center" id="Curr_Temp"></p>
           </div>
 
-          <div class="col-md-3" style="background-color:lightcyan;">
+          <div class="col-xs-6 col-md-3">
             <p id="Curr_ApparentTempLabel"></p>
             <p id="Curr_PrecipProbLabel"></p>
             <p id="Curr_PrecipTypeLabel"></p>
@@ -305,7 +338,7 @@
             <p id="SunRiseSetTimeLabel"></p>
           </div>
 
-          <div class="col-md-5" style="background-color:lightgrey;">
+          <div class="col-xs-6 col-md-5">
             <p id="Curr_ApparentTemp"></p>
             <p id="Curr_PrecipProb"></p>
             <p id="Curr_PrecipType"></p>
@@ -317,12 +350,12 @@
       </div> <!-- End Currently -->
       
       <div id="Hourly">
-        <h2 class="text-center">Hourly Conditions</h2>
+        <h3 class="text-center">HOURLY   CONDITIONS</h3>
           <table class="tableDisplay" id="hourlyConditions"></table>
       </div> <!-- End Hourly -->
 
       <div id="Daily">
-        <h2 class="text-center">Daily Forecast</h2>
+        <h3 class="text-center">DAILY   FORECAST</h3>
         <table class="tableDisplay" id="dailyConditions"></table>
       </div> <!-- End Daily -->
 
