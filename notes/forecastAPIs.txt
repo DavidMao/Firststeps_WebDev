@@ -1,0 +1,34 @@
+Forecast Keys
+
+forecast.io
+    Calls per day:      1000
+    Calls per minute:   N/A
+    Hourly Chance of Precipitation: Yes
+    Ease of use for weather description: General too simple; detailed too detailed
+    Ease of API Use:
+    Ease of API Doc:
+    API Key: 6d05918df78bd79bb525d1ceb521cb63
+    Example: https://api.forecast.io/forecast/6d05918df78bd79bb525d1ceb521cb63/47.61167908,-122.33325958
+
+Hamweather
+    Calls per day:      750
+    Calls per hour:     N/A
+    Hourly Chance of Precipitation: Yes
+    Ease of use for weather description: Good.
+    Ease of API Use:
+    Ease of API Doc:
+    API Key:
+        Consumer ID
+        AeCglprPVOGUsBqLZ554K
+
+        Consumer Secret
+        xqWnbm4TToQUGzim2aEbpRjTgYYVuBgoyRFPRWwC
+
+weather underground
+    Calls per day:      500
+    Calls per minute:   10. 2-3 calls per page refresh
+    Hourly Chance of Precipitation:
+    Ease of use for weather description:
+    API Key:
+    c9f4cbab3e595bda
+

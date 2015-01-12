@@ -21,12 +21,11 @@
         font-family: "Calibri";
         letter-spacing: 1px;
         padding: 15px;
-
-        /*From FTW*/
-        /*overflow:hidden;*/
-        /*for white color:#fff;*/
-        <!-- background: url('../img/bg.jpg') no-repeat center center fixed; -->
+        color:#fff;
+        background: no-repeat center center fixed;
         text-align: center;
+        /*-webkit-background-size: cover;*/
+        background-size: cover;
       }
 
       h3 {
@@ -56,8 +55,7 @@
       }
 
       #tableHead {
-        border-bottom: 1px solid #000;
-        /*padding: 0px 0px 50px 0px;*/
+        border-bottom: 1px solid #fff;
       }
 
       #hourlyConditions {
@@ -100,7 +98,7 @@
       var longi = -122.33325958;
 
       var skycons = new Skycons({
-        "color": "#000000"
+        "color": "#fff"
       });
 
       jQuery(document).ready(function($) {
@@ -115,6 +113,9 @@
             var currRaw = json.currently;
             var hourlyRaw = json.hourly.data;
             var dailyRaw = json.daily.data;
+
+            // Background
+            displayBackground(currRaw.icon);
 
             // CURRENTLY
             displayCurrently(currRaw, dailyRaw[0]);
@@ -168,6 +169,23 @@
         dateTime['dayLong'] = weekdayLong[date.getDay()];
 
         return dateTime;
+      }
+
+      function displayBackground(icon) {
+
+        var backgrounds = new Object();
+        backgrounds['clear-day'] = 'http://static.tumblr.com/6dria9z/oyIni236g/clear-day.jpg';
+        backgrounds['clear-night'] = 'http://static.tumblr.com/6dria9z/AdLni237i/clear-night.jpg';
+        backgrounds['rain'] = 'http://static.tumblr.com/6dria9z/PzHni23b3/rain_2.jpg';
+        backgrounds['snow'] = 'http://static.tumblr.com/6dria9z/cgRni23ag/snow.jpg';
+        backgrounds['sleet'] = 'http://static.tumblr.com/6dria9z/cgRni23ag/snow.jpg';
+        backgrounds['wind'] = 'http://static.tumblr.com/6dria9z/teWni238n/cloudy_1.jpg';
+        backgrounds['fog'] = 'http://static.tumblr.com/6dria9z/teWni238n/cloudy_1.jpg';
+        backgrounds['cloudy'] = 'http://static.tumblr.com/6dria9z/teWni238n/cloudy_1.jpg';
+        backgrounds['party-cloudy-day'] = 'http://static.tumblr.com/6dria9z/teWni238n/cloudy_1.jpg';
+        backgrounds['partly-cloudy-night'] = 'http://static.tumblr.com/6dria9z/J4Jni2399/night.jpg';
+
+        $('body').css('backgroundImage', 'url(' + backgrounds[icon] + ')');
       }
 
       function displayCurrently(currRaw, dailyRaw) {
@@ -278,14 +296,6 @@
         for (var i = 0; i < dailyArrayLength; i++) {
           r[++j] = '<td>' + dailyTempHighArray[i] + " | " + dailyPrecipProbArray[i] + '</td>';
         }
-        // r[++j] = '</tr><tr>';
-        // for (var i = 0; i < dailyTempHighArray.length; i++) {
-        //   r[++j] = '<td>' + dailyTempHighArray[i] + '</td>';
-        // }
-        // r[++j] = '</tr><tr>';
-        // for (var i = 0; i < dailyTempLowArray.length; i++) {
-        //   r[++j] = '<td>' + dailyTempLowArray[i] + '</td>';
-        // }
         r[++j] = '</tr>';
         $('#dailyConditions').html(r.join(''));
 
