@@ -14,6 +14,8 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <!-- Skycons -->
     <script src="https://rawgit.com/darkskyapp/skycons/master/skycons.js"></script>
+    <!-- Google Geocoder -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 
     <style>
 
@@ -94,42 +96,82 @@
     <script type="text/javascript">
 
       var apiKey = '6d05918df78bd79bb525d1ceb521cb63';
-      var lati = 47.61167908;
-      var longi = -122.33325958;
+
+      var loc_name = "Los Angeles, CA, USA";
+      var lati = 33.9425;
+      var longi = -118.4081;
+      // var loc_name = "Seattle, WA, USA";
+      // var lati = 47.61167908;
+      // var longi = -122.33325958;
 
       var skycons = new Skycons({
         "color": "#fff"
       });
 
-      jQuery(document).ready(function($) {
-        $.ajax({
-          url: 'https://api.forecast.io/forecast/' + apiKey + '/' + lati + ',' + longi,
-          dataType: "jsonp",
-          success: function(json) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(updatePosition, showError);
+      } else {
+        alert("Geolocation is not supported by this browser. Defaulting to Los Angeles.");
+        displayLocation(false);
+        run();
+      }
 
-            // debug
-            // console.log(json);
+      function updatePosition(position) {
+        console.log("Location Found.");
+        lati = position.coords.latitude;
+        longi = position.coords.longitude;
 
-            var currRaw = json.currently;
-            var hourlyRaw = json.hourly.data;
-            var dailyRaw = json.daily.data;
+        displayLocation(true);
+        run();
+      }
 
-            // Background
-            displayBackground(currRaw.icon);
+      function showError(error) {
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation. Defaulting to Los Angeles");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable. Defaulting to Los Angeles");
+            break;
+          case error.TIMEOUT:
+            alert("The request to get user location timed out. Defaulting to Los Angeles");
+            break;
+          case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred. Defaulting to Los Angeles");
+            break;
+        }
+        displayLocation(false);
+        run();
+      }
 
-            // CURRENTLY
-            displayCurrently(currRaw, dailyRaw[0]);
-            
-            // HOURLY
-            displayHourly(hourlyRaw);
+      function run() {
 
-            // DAILY
-            displayDaily(dailyRaw);
-          }
+        jQuery(document).ready(function($) {
+          $.ajax({
+            url: 'https://api.forecast.io/forecast/' + apiKey + '/' + lati + ',' + longi,
+            dataType: "jsonp",
+            success: function(json) {
+              var currRaw = json.currently;
+              var hourlyRaw = json.hourly.data;
+              var dailyRaw = json.daily.data;
+
+              // Background
+              displayBackground(currRaw.icon);
+
+              // CURRENTLY
+              displayCurrently(currRaw, dailyRaw[0]);
+
+              // HOURLY
+              displayHourly(hourlyRaw);
+
+              // DAILY
+              displayDaily(dailyRaw);
+            }
+          });
         });
-      });
 
-      skycons.play();
+        skycons.play();
+      }
 
       function convertEpoch(epoch) {
         var date = new Date(parseFloat(epoch + "000"));
@@ -169,6 +211,28 @@
         dateTime['dayLong'] = weekdayLong[date.getDay()];
 
         return dateTime;
+      }
+
+      function displayLocation(usingGeolocation) {
+
+        if (usingGeolocation) {
+          var geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(lati,longi);
+
+          geocoder.geocode({'latLng': latlng}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                loc_name = results[5].formatted_address;
+              }
+            } else {
+              console.log("Reverse Geocode failed.");
+              loc_name = "";
+            }
+            document.getElementById("LocationName").innerHTML = loc_name;
+          });
+        } else {
+          document.getElementById("LocationName").innerHTML = loc_name;
+        }
       }
 
       function displayBackground(icon) {
@@ -309,7 +373,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6 col-md-6">
-          <h3 class="text-left">SEATTLE. WASHINGTON</h3>
+          <h3 class="text-left" id="LocationName"></h3>
         </div>
         <div class="col-sm-6 col-md-6">
           <h3 class="text-right" id="Curr_DateTime"> </h3>
