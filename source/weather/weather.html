@@ -121,6 +121,9 @@
         lati = position.coords.latitude;
         longi = position.coords.longitude;
 
+        console.log("latitude: " + lati);
+        console.log("longitude: " + longi);
+
         displayLocation(true);
         run();
       }
@@ -221,8 +224,33 @@
 
           geocoder.geocode({'latLng': latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-              if (results[1]) {
-                loc_name = results[5].formatted_address;
+
+              var cityFound = false;
+              var stateFound = false;
+              var cityName = "";
+              var stateName = "";
+
+              for (var i = 0; i < results.length; i++) {
+                for (var j = 0; j < results[i].address_components.length; j++) {
+                  for (var k = 0; k < results[i].address_components[j].types.length; k++) {
+                    if (results[i].address_components[j].types[k] === 'locality') {
+                      cityName = results[i].address_components[j].long_name;
+                      cityFound = true;
+                    }
+                    if (results[i].address_components[j].types[k] === 'administrative_area_level_1') {
+                      stateName = results[i].address_components[j].short_name;
+                      stateFound = true;
+                    }
+                  }
+                }
+              }
+              if (cityFound) {
+                loc_name = cityName;
+                if (stateFound && cityName !== stateName) {
+                  loc_name += ", " + stateName;
+                }
+              } else {
+                loc_name = "";
               }
             } else {
               console.log("Reverse Geocode failed.");
