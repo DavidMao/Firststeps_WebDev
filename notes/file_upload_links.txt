@@ -16,3 +16,26 @@ rain_2.jpg
     http://static.tumblr.com/6dria9z/PzHni23b3/rain_2.jpg
 snow.jpg
     http://static.tumblr.com/6dria9z/cgRni23ag/snow.jpg
+
+Wood_Background.png
+    http://static.tumblr.com/6dria9z/jyaniewch/wood_background.jpg
+forest.jpg
+    http://static.tumblr.com/6dria9z/r34niex1t/forest.jpg
+
+
+Parallax
+~~~~~~~~
+cloud_1.png
+    http://static.tumblr.com/6dria9z/Ai7niev6j/cloud_1.png
+cloud_2.png
+    http://static.tumblr.com/6dria9z/2nZniev7k/cloud_2.png
+cloud_3.png
+    http://static.tumblr.com/6dria9z/TbZniev7y/cloud_3.png
+cloud_4.png
+    http://static.tumblr.com/6dria9z/9Nuniev8f/cloud_4.png
+
+
+Style items
+~~~~~~~~~~~
+FearTheWild Divider
+    http://static.tumblr.com/6dria9z/mJYniexpw/divider.png
