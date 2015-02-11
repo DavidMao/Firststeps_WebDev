@@ -17,19 +17,13 @@ http.createServer(function(request, response) {
 
     switch(uri) {
         case '/':
-            filename = __dirname + '/source/index.html';
+            filename = __dirname + '/src/index.html';
         break;
         case '/weather':
-            filename = __dirname + '/source/weather/weather.html';
+            filename = __dirname + '/src/weather/weather.html';
         break;
         case '/myweather':
-            filename = __dirname + '/source/weather/myWeather.html';
-        break;
-        case '/morning':
-            filename = __dirname + '/source/morning/morning.html';
-        break;
-        case '/jiayi':
-            filename = __dirname + '/source/jiayi.html';
+            filename = __dirname + '/src/weather/myWeather.html';
         break;
         default:
             filename = __dirname + uri;
@@ -38,7 +32,7 @@ http.createServer(function(request, response) {
 
     fs.exists(filename, function(exists) {
         if(!exists) {
-            filename = __dirname + '/source/notFound.html';
+            filename = __dirname + '/src/notFound.html';
         }
 
         fs.readFile(filename, "binary", function(err, file) {
