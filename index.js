@@ -1,40 +1,62 @@
-var app = require("http").createServer(createServer);
-var fs = require('fs');
-var url = require('url');
-var port = process.env.PORT || 5000
+var http = require("http"),
+    url = require("url"),
+    path = require("path"),
+    fs = require("fs")
+    port = process.env.PORT || 5000;
 
-function createServer(req, res) {
-    var path = url.parse(req.url).pathname;
-    var fsCallback = function(error, data) {
-        if(error) throw error;
+http.createServer(function(request, response) {
 
-        res.writeHead(200);
-        res.write(data);
-        res.end();
-    }
+    var uri = url.parse(request.url).pathname;
+    var filename;
 
-    switch(path) {
+    var contentTypesByExtension = {
+        '.html': "text/html",
+        '.css':  "text/css",
+        '.js':   "text/javascript"
+    };
+
+    switch(uri) {
         case '/':
-            doc = fs.readFile(__dirname + '/source/index.html', fsCallback);
-		break;
+            filename = __dirname + '/source/index.html';
+        break;
         case '/weather':
-            doc = fs.readFile(__dirname + '/source/weather/weather.html', fsCallback);
+            filename = __dirname + '/source/weather/weather.html';
         break;
         case '/myweather':
-            doc = fs.readFile(__dirname + '/source/weather/myWeather.html', fsCallback);
+            filename = __dirname + '/source/weather/myWeather.html';
         break;
         case '/morning':
-            doc = fs.readFile(__dirname + '/source/morning/morning.html', fsCallback);
+            filename = __dirname + '/source/morning/morning.html';
         break;
         case '/jiayi':
-            doc = fs.readFile(__dirname + '/source/jiayi.html', fsCallback);
+            filename = __dirname + '/source/jiayi.html';
         break;
         default:
-            doc = fs.readFile(__dirname + '/source/notFound.html', fsCallback);
+            filename = __dirname + uri;
         break;
-	}
-}
+    }
 
-app.listen(port, function() {
-  console.log("Node app is running at localhost:" + port)
-})
+    fs.exists(filename, function(exists) {
+        if(!exists) {
+            filename = __dirname + '/source/notFound.html';
+        }
+
+        fs.readFile(filename, "binary", function(err, file) {
+            if(err) {
+                response.writeHead(500, {"Content-Type": "text/plain"});
+                response.write(err + "\n");
+                response.end();
+                return;
+            }
+
+            var headers = {};
+            var contentType = contentTypesByExtension[path.extname(filename)];
+            if (contentType) headers["Content-Type"] = contentType;
+            response.writeHead(200, headers);
+            response.write(file, "binary");
+            response.end();
+        });
+    });
+}).listen(parseInt(port, 10));
+
+console.log("Server running on port: " + port + "\nCTRL + C to shutdown");
