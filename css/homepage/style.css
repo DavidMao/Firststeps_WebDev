@@ -1,0 +1,233 @@
+/* ////////////////////////////////////////////////////////////
+    PARALLAX SECTIONS
+//////////////////////////////////////////////////////////// */
+
+section.module:last-child {
+  margin-bottom: 0;
+}
+
+section.module h2 {
+  margin-bottom: 40px;
+  font-family: "Roboto Slab", serif;
+  font-size: 30px;
+}
+
+section.module p {
+  margin-bottom: 40px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+section.module p:last-child {
+  margin-bottom: 0;
+}
+
+section.module.content {
+  padding: 90px 0;
+}
+
+section.module.parallax {
+  height: 500px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+section.module.parallax h1 {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 48px;
+  line-height: 600px;
+  font-weight: 100;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+section.module.parallax-1 {
+  background-image: url("../../img/homepage/1-Me1_Small.jpg");
+  height:850px;
+}
+
+section.module.parallax-2 {
+  background-image: url("../../img/homepage/2-Photos.jpg");
+}
+
+section.module.parallax-3 {
+  background-image: url("../../img/homepage/3-Projects.jpg");
+}
+
+section.module.parallax-4 {
+  background-image: url("../../img/homepage/4-Contact.jpg");
+}
+
+
+
+/* ////////////////////////////////////////////////////////////
+    CUSTOMIZE SECTIONS
+//////////////////////////////////////////////////////////// */
+
+#title h1 {
+  color: #000;
+  font-weight: 100;
+  line-height: 1;
+}
+
+#title p {
+  margin-top: 90px;
+  margin-bottom: 0;
+}
+
+/* Blurb */
+#blurb {
+  text-align: right;
+}
+
+#contact h1 {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 100;
+}
+
+/* ////////////////////////////////////////////////////////////
+    PHOTO IMAGE LINKS
+//////////////////////////////////////////////////////////// */
+
+.photo-link, .photo-link img {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  position: relative;
+
+  z-index:1;
+}
+
+a.darken {
+  display: inline-block;
+  background: black;
+  padding: 0;
+}
+
+a.darken img {
+  display: block;
+
+  -webkit-transition: all 0.5s linear;
+     -moz-transition: all 0.5s linear;
+      -ms-transition: all 0.5s linear;
+       -o-transition: all 0.5s linear;
+          transition: all 0.5s linear;
+}
+
+a.darken:hover img {
+  opacity: 0.5;
+}
+
+.photo-link-title {
+  display:block;
+  position:absolute;
+  width:100%;
+  bottom:10%;
+  left:0;
+  z-index:2;
+  text-align:center;
+  color: white;
+  letter-spacing: -1px;
+  background:rgba(0,0,0,0.5);
+  padding: 10px;
+}
+
+/* ////////////////////////////////////////////////////////////
+    PROJECTS
+//////////////////////////////////////////////////////////// */
+
+.project-img, .project-img img {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  display: block;
+  position: relative;
+}
+
+a.lighten {
+  display: inline-block;
+  background: white;
+  padding: 0;
+}
+
+a.nolighten {
+  display: inline-block;
+  background: white;
+  padding: 0;
+}
+
+a.lighten img {
+  display: block;
+
+  -webkit-transition: all 0.5s linear;
+     -moz-transition: all 0.5s linear;
+      -ms-transition: all 0.5s linear;
+       -o-transition: all 0.5s linear;
+          transition: all 0.5s linear;
+}
+
+a.lighten:hover img {
+  opacity: 0.7;
+}
+
+/* ////////////////////////////////////////////////////////////
+    RESIZING
+//////////////////////////////////////////////////////////// */
+
+/* Sets sizes based on screen width */
+@media all and (min-width: 600px) {
+  section.module h2 {
+    font-size: 42px;
+  }
+
+  section.module p {
+    font-size: 20px;
+  }
+
+  section.module.parallax h1 {
+    font-size: 96px;
+  }
+}
+
+@media all and (min-width: 960px) {
+  section.module.parallax h1 {
+    font-size: 160px;
+  }
+
+  #blurb {
+    float: right;
+  }
+}
+
+/* ////////////////////////////////////////////////////////////
+    OTHER
+//////////////////////////////////////////////////////////// */
+
+#resume-img-holder {
+  max-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+#resume-img-text {
+  text-align: center;
+}
+
+#photo-logo {
+  max-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

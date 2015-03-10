@@ -1,0 +1,206 @@
+/* ////////////////////////////////////////////////////////////
+    RESET
+//////////////////////////////////////////////////////////// */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acroynm, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ////////////////////////////////////////////////////////////
+    Box Sizing & Clearfix
+//////////////////////////////////////////////////////////// */
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ////////////////////////////////////////////////////////////
+    HTML & Body
+//////////////////////////////////////////////////////////// */
+
+body {
+  background-color: #b4b4b4;
+  color: #787878;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucia Grande", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ////////////////////////////////////////////////////////////
+    Primary Structure
+//////////////////////////////////////////////////////////// */
+
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+main {
+  display: block;
+  background-color: #fff;
+}
+
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ////////////////////////////////////////////////////////////
+    Navigation bar
+//////////////////////////////////////////////////////////// */
+
+.nav-bar {
+  padding: 10px 0;
+  background-color: transparent;
+  text-align: left;
+  height: 30px;
+  opacity: 0.7;
+  alpha(opacity=50);
+}
+
+.nav-link {
+  padding: 10px;
+}
+
+.nav-bar:hover {
+  opacity:1.0;
+  filter: alpha(opacity=70);
+}
+
+/* ////////////////////////////////////////////////////////////
+    Footer
+//////////////////////////////////////////////////////////// */
+
+footer {
+  padding: 20px 0;
+}
+
+footer .asides {
+  margin-bottom: 20px;
+}
+
+footer aside {
+  margin-bottom: 10px;
+}
+
+footer nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+footer nav li {
+  display: inline-block;
+}
+
+footer nav a {
+  display: block;
+  margin: 0 5px;
+  color: #fff;
+}
+
+footer .copyright {
+  text-align: center;
+}
+
+footer .copyright small {
+  color: #fff;
+  font-size: 12px;
+}
+
+footer .copyright a {
+  color: #828282;
+}
+
+@media all and (min-width: 600px) {
+  footer aside {
+    margin-bottom: 0;
+    float: left;
+    width: 33.3333%;
+  }
+
+  footer nav ul {
+    text-align: left;
+  }
+
+  footer nav li {
+    display: block;
+  }
+
+  footer nav a {
+    display: inline-block;
+    margin: 0;
+  }
+}
+
+/* ////////////////////////////////////////////////////////////
+    Text Level Semantics
+//////////////////////////////////////////////////////////// */
+
+a {
+  text-decoration: none;
+  color: #787878;
+}
+
+a:hover {
+  color: #818181;
+}
