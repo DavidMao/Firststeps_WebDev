@@ -112,17 +112,19 @@ main {
   background-color: transparent;
   text-align: left;
   height: 30px;
-  opacity: 0.7;
-  alpha(opacity=50);
 }
 
 .nav-link {
+  color: #999999;
   padding: 10px;
 }
 
-.nav-bar:hover {
-  opacity:1.0;
-  filter: alpha(opacity=70);
+.nav-link:hover {
+  color: #000;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  transition: all 0.2s linear;
 }
 
 /* ////////////////////////////////////////////////////////////
@@ -198,9 +200,12 @@ footer .copyright a {
 
 a {
   text-decoration: none;
+  text-decoration-line: none;
   color: #787878;
 }
 
 a:hover {
   color: #818181;
+  text-decoration: none;
+  text-decoration-line: none;
 }
