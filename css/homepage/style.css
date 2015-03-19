@@ -189,7 +189,7 @@ a.lighten:hover img {
 @media all and (max-width: 400px) {
   section.module.parallax-1 {
     background-image: none;
-    background-color: #cedef4;
+    background-color: #fff;
     height: 400px;
   }
 
