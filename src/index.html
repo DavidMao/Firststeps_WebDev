@@ -1,24 +1,248 @@
-<html>
-  <head>
-    <style>
-      body {
-        font-family: "Helvetica Neue", helvetica, arial;
-        padding: 15px;
-      }
+<!DOCTYPE html>
 
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
+<html class="no-js" lang="en">
+<head>
+  <!-- Title and Meta -->
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0" name="viewport">
 
-      ul li {
-        line-height: 1.4;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>David's Website</h1>
-    <p>This page is in the works</p>
-  </body>
+  <title>David Mao | Home</title>
+
+  <meta name="description" content="David Mao. Software developer at Amazon, creative portrait & landscape photographer, crossfitter, enthusiastic explorer. Learn more about me here!">
+
+  <link rel="shortcut icon" type="image/png" href="../img/icons/favicons/favicon-leaf.png"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Slab">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <!-- My CSS -->
+  <link rel="stylesheet" href="../css/homepage/base.css">
+  <link rel="stylesheet" href="../css/homepage/style.css">
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-60937268-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <main>
+      <section class="module parallax parallax-1">
+        <div class="nav-bar">
+          <div class="container">
+            <a href="#About" class="nav-link">About</a>
+            <a href="#Photography" class="nav-link">Photography</a>
+            <a href="#Projects" class="nav-link">Projects</a>
+            <a href="#Contact" class="nav-link">Contact</a>
+          </div>
+        </div>
+        <div class="container" id="first-parallax">
+          <div class="col-sm-6" id="title">
+            <p>Hello! My name is</p>
+            <h1>David<br>Mao</h1>
+          </div>
+        </div>
+      </section>
+
+      <a name="About"></a>
+      <section class="module content">
+        <div class="container">
+          <div class="col-md-6" id="blurb">
+            <h2>I am a<br> software engineer<br> and a freelance<br> photographer</h2>
+          </div>
+          <div class="col-md-6">
+            <p>I am a recent UCLA graduate with a degree in Computer Science. Originally from the Bay Area, schooled in Los Angeles, and currently based in Seattle.</p>
+            <p>I'm a software developer at Amazon.com.</p>
+            <p> Some of my favorite hobbies include photography, soccer, web design, weight lifting, hiking, and traveling. In my free time, I like to explore the beautiful outdoors of Washington and take photos.</p>
+            <p>I'm always looking to expand my experiences. The world has music for those who listen.</p>
+          </div>
+        </div>
+      </section>
+
+      <a name="Photography"></a>
+      <section class="module parallax parallax-2">
+        <div class="container">
+          <h1>Photos</h1>
+        </div>
+      </section>
+
+      <section class="module content">
+        <div class="container">
+          <h2>David Mao Photography</h2>
+          <p>I developed my love for photography from a young age.<br><br>I grew up in a family that appreciated the outdoors, and we would often go camping, hiking, snowboarding, etc. On these trips, I found myself looking for a way to capture the incredible views that I saw. This is how I picked up photography, and I was always in possession of the family camera. I purchased my first DSLR in August of 2011, and though it has not been too long since then, I have always tried to take advantage of opportunities to practice and learn.<br><br>This year, I have challenged myself to take and post a photo every week. Please check them out!</p>
+          <div class="col-sm-4">
+            <div class="photo-link">
+              <a href="https://davidmao.exposure.co/52-week-photo-challenge" class="darken" target="_blank">
+                <img src="../img/homepage/photo_link_pictures/IceCave.jpg">
+                <p class="photo-link-title">52 Week Challenge</p>
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-4" >
+            <div class="photo-link" class="darken">
+              <a href="https://www.flickr.com/photos/davidmaophotography" class="darken" target="_blank">
+                <img src="../img/homepage/photo_link_pictures/Prague.jpg">
+                <p class="photo-link-title">Flickr </p>
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="photo-link">
+              <a href="https://www.facebook.com/davidmaophotography" class="darken" target="_blank">
+                <img src="../img/homepage/photo_link_pictures/FB_Screenshot.jpg">
+                <p class="photo-link-title">Facebook Photo Page</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <a name="Projects"></a>
+      <section class="module parallax parallax-3">
+        <div class="container">
+          <h1>Projects</h1>
+        </div>
+      </section>
+
+      <section class="module content">
+        <div class="container">
+          <div class="col-sm-12">
+            <h2><a href="../weather" target="_blank">Weather Site</a></h2>
+          </div>
+          <div class="col-md-4 col-md-push-8">
+            <div class="project-img">
+              <a href="../weather" class="lighten" target="_blank">
+                <img src="../img/homepage/project_screenshots/Screen-Weather.png">
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-md-pull-4">
+            <p>This is a weather forecast site. It's a simple, elegant, 1-page concept that I used to practice UI design and web implementation. It features animated weather icons, dynamic backgrounds based on the current weather, and location detection via the browser.</p>
+            <p>Technologies: HTML5 Geolocation; Google Geocoder; Forecast.io; Bootstrap<br><br><br></p>
+          </div>
+
+          <div class="col-sm-12">
+            <h2><a href="http://whiteboardweb.herokuapp.com/" target="_blank">
+              Whiteboard: Collaborative Platform</a></h2>
+          </div>
+          <div class="col-md-4">
+            <div class="project-img">
+              <a href="http://whiteboardweb.herokuapp.com/" class="lighten" target="_blank">
+                <img src="../img/homepage/project_screenshots/Screen-Whiteboard.png">
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <p>Whiteboard is a collaborative online whiteboard. It is a proof-of-concept cross-platform web-based application where users can add typed text, draw, post pictures, edit, create sessions, and download screenshots--all while the app syncs real-time via wifi. It is built to work on the desktop browser, iOS, and Android devices.</p>
+            <p>Technologies: PhoneGap; Firebase NoSQL Database; Fabric.js; Angular.js; Node.js; Hammer.js<br><br><br></p>
+          </div>
+
+          <div class="col-sm-12">
+            <h2>Babelogue: Speech Translator</h2>
+          </div>
+          <div class="col-md-4 col-md-push-8">
+            <div class="project-img">
+              <a class="nolighten">
+                <img class="la" src="../img/homepage/project_screenshots/Screen-Babelogue.png">
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8 col-md-pull-4">
+            <p>Google Hangouts is great, but lacks language translation functionality. Babelogue is a proof-of-concept Hangouts extension that helps make real-time multilingual communication more seamless, allowing users to transcend language barriers.</p>
+            <p>Babelogue achieves real-time speech translation. Users can speak (and/or type), and the words are recorded, translated and displayed to the other users automatically. (For the record: Babelogue was created before Skype launched its version.) </p>
+            <p>Technologies: Google Hangouts API; Google Translate API; SpeechToText API.<br><br><br></p>
+          </div>
+
+          <div class="col-sm-12">
+            <h2>Tronsformers: Graphics Game</h2>
+          </div>
+          <div class="col-md-4">
+            <div class="project-img">
+              <a class="nolighten">
+                <img src="../img/homepage/project_screenshots/Screen-Tronsformers.png">
+              </a>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <p>Tronsformers is a proof-of-concept 3-D game. It utilizes a custom, self-built graphics engine and facial detection / head tracking library that allows a user to control the camera in a 3-D environment.</p>
+            <p>Technologies: WebGL; headtracker.js<br></p>
+          </div>
+        </div>
+      </section>
+
+      <a name="Contact"></a>
+      <section class="module parallax parallax-4">
+        <div class="container" id="contact">
+          <h1>Contact</h1>
+        </div>
+      </section>
+
+      <section class="module content">
+        <div class="container">
+          <div class="col-sm-12">
+            <h2>Reach out to me!</h2>
+          </div>
+          <div class="col-sm-3">
+            <p id="resume-img-text">Here's my resume:</p>
+            <div class="project-img" id="resume-img-holder">
+              <a href="../resume" class="lighten" target="_blank">
+                <img src="../img/homepage/Resume.png">
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <p>I hope you've enjoyed my website! The layout design, development, and photos on this site are my own work.</p>
+            <p>If you want to get in contact with photo inquiries, work/project opportunities, or just want to get to know me, please email me at: <a href="mailto:david.mao@gmail.com" target="_top">david.mao@gmail.com</a></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="asides clearfix">
+          <div class="col-sm-4">
+            <aside>
+              <nav>
+                <ul>
+                  <li><a href="../resume" target="_blank">Resume</a></li>
+                  <li><a href="http://www.linkedin.com/in/daviddanmao" target="_blank">LinkedIn</a></li>
+                  <li><a href="mailto:david.mao@gmail.com" target="_top">Email</a></li>
+                </ul>
+              </nav>
+            </aside>
+          </div>
+          <div class="col-sm-4">
+            <aside>
+              <nav>
+                <ul>
+                  <li><a href="https://www.flickr.com/photos/davidmaophotography/" target="_blank">Flickr</a></li>
+                  <li><a href="https://www.facebook.com/davidmaophotography" target="_blank">Facebook</a></li>
+                </ul>
+              </nav>
+            </aside>
+          </div>
+          <div class="col-sm-4">
+              <img src="../img/homepage/Photo_Logo.png" id="photo-logo">
+          </div>
+        </div>
+        <div class="copyright">
+          <small>
+            &copy; David Mao 2015<br><a href="http://davidmao.me">davidmao.me</a>
+          </small>
+        </div>
+      </div>
+    </footer>
+  </div> <!-- /Wrapper -->
+</body>
+
 </html>

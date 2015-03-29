@@ -17,10 +17,10 @@ http.createServer(function(request, response) {
 
   switch(uri) {
     case '/':
-      filename = __dirname + '/src/homepage/home.html';
+      filename = __dirname + '/src/index.html';
     break;
     case '/home':
-      filename = __dirname + '/src/homepage/home.html';
+      filename = __dirname + '/src/index.html';
     break;
     case '/weather':
       filename = __dirname + '/src/weather/weather.html';
