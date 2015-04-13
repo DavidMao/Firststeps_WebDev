@@ -188,26 +188,26 @@ a.lighten:hover img {
 /* Sets sizes based on screen width */
 @media all and (max-width: 400px) {
   section.module.parallax-1 {
-    background-image: none;
-    background-color: #fff;
+    background-image: url("../../img/homepage/1-Me_small.jpg");
+    background-attachment: scroll !important;
     height: 400px;
   }
 
   section.module.parallax-2 {
-    background-image: none;
-    background-color: #6ca870;
+    background-image: url("../../img/homepage/2-Photos_small.jpg");
+    background-attachment: scroll !important;
     height: 400px;
   }
 
   section.module.parallax-3 {
-    background-image: none;
-    background-color: #2faace;
+    background-image: url("../../img/homepage/3-Projects.jpg");
+    background-attachment: scroll !important;
     height: 400px;
   }
 
   section.module.parallax-4 {
-    background-image: none;
-    background-color: #ffecec;
+    background-image: url("../../img/homepage/4-Contact_small.jpg");
+    background-attachment: scroll !important;
     height: 400px;
   }
 }
