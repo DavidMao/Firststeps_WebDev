@@ -48,7 +48,7 @@ section.module.parallax h1 {
 
 section.module.parallax-1 {
   background-image: url("../../img/homepage/1-Me.jpg");
-  height:850px;
+  height:100vh;
 }
 
 section.module.parallax-2 {
