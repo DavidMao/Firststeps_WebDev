@@ -1,100 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <meta charset="utf-8">
+
+    <title>Weather | David Mao</title>
+    <meta name="description" content="David Mao's local weather forecast site. Automatic location detection for your city and an elegant, minimalist UI.">
+    <link rel="shortcut icon" type="image/png" href="../../img/icons/favicons/favicon-leaf.png"/>
+
     <!-- bootstrap -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <!-- Optional: Incorporate the Bootstrap JavaScript plugins -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- Skycons -->
     <script src="https://rawgit.com/darkskyapp/skycons/master/skycons.js"></script>
     <!-- Google Geocoder -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 
-    <title>Weather | David Mao</title>
-
-    <meta name="description" content="David Mao's local weather forecast site. Automatic location detection for your city and an elegant, minimalist UI.">
-
-    <link rel="shortcut icon" type="image/png" href="../../img/icons/favicons/favicon-leaf.png"/>
-
-    <style>
-
-      body {
-        font-family: "Calibri";
-        letter-spacing: 1px;
-        padding: 15px;
-        color:#fff;
-        background: no-repeat center center fixed;
-        text-align: center;
-        /*-webkit-background-size: cover;*/
-        background-size: cover;
-      }
-
-      h3 {
-        letter-spacing: 5px;
-      }
-
-      #Curr_WeatherIcon {
-        padding-left: 0;
-        padding-right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-      }
-
-      #Curr_Temp {
-        font-size:600%;
-      }
-
-      #Curr_Summary {
-        font-size:125%;
-      }
-
-      .tableDisplay {
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-      }
-
-      #tableHead {
-        border-bottom: 1px solid #fff;
-      }
-
-      #hourlyConditions {
-        border-collapse:separate;
-        border-spacing:0px 5px;
-      }
-
-      #hourlyConditions td {
-        padding: 0px 15px 0px 15px;
-      }
-
-      #dailyConditions {
-        border-collapse:separate;
-        border-spacing:0px 5px;
-      }
-
-      #dailyConditions td {
-        padding: 0px 7px 0px 7px;
-      }
-
-      ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      ul li {
-        line-height: 1.4;
-      }
-
-    </style>
+    <!--  weather javascript  -->
+    <script src="../../js/weather/weather.js"></script>
+    <!--  weather css  -->
+    <link rel="stylesheet" href="../../css/weather/weather.css">
 
     <!-- Google Analytics -->
     <script>
@@ -105,377 +34,75 @@
 
       ga('create', 'UA-60937268-2', 'auto');
       ga('send', 'pageview');
-
     </script>
 
   </head>
   <body>
-
-    <script type="text/javascript">
-
-      var apiKey = '6d05918df78bd79bb525d1ceb521cb63';
-
-      var loc_name = "Los Angeles, CA, USA";
-      var lati = 33.9425;
-      var longi = -118.4081;
-      // var loc_name = "Seattle, WA, USA";
-      // var lati = 47.61167908;
-      // var longi = -122.33325958;
-
-      var skycons = new Skycons({
-        "color": "#fff"
-      });
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(updatePosition, showError);
-      } else {
-        alert("Geolocation is not supported by this browser. Defaulting to Los Angeles.");
-        displayLocation(false);
-        run();
-      }
-
-      function updatePosition(position) {
-        console.log("Location Found.");
-        lati = position.coords.latitude;
-        longi = position.coords.longitude;
-
-        console.log("latitude: " + lati);
-        console.log("longitude: " + longi);
-
-        displayLocation(true);
-        run();
-      }
-
-      function showError(error) {
-        switch(error.code) {
-          case error.PERMISSION_DENIED:
-            alert("User denied the request for Geolocation. Defaulting to Los Angeles");
-            break;
-          case error.POSITION_UNAVAILABLE:
-            alert("Location information is unavailable. Defaulting to Los Angeles");
-            break;
-          case error.TIMEOUT:
-            alert("The request to get user location timed out. Defaulting to Los Angeles");
-            break;
-          case error.UNKNOWN_ERROR:
-            alert("An unknown error occurred. Defaulting to Los Angeles");
-            break;
-        }
-        displayLocation(false);
-        run();
-      }
-
-      function run() {
-
-        jQuery(document).ready(function($) {
-          $.ajax({
-            url: 'https://api.forecast.io/forecast/' + apiKey + '/' + lati + ',' + longi,
-            dataType: "jsonp",
-            success: function(json) {
-              var currRaw = json.currently;
-              var hourlyRaw = json.hourly.data;
-              var dailyRaw = json.daily.data;
-
-              // Background
-              displayBackground(currRaw.icon);
-
-              // CURRENTLY
-              displayCurrently(currRaw, dailyRaw[0]);
-
-              // HOURLY
-              displayHourly(hourlyRaw);
-
-              // DAILY
-              displayDaily(dailyRaw);
-            }
-          });
-        });
-
-        skycons.play();
-      }
-
-      function convertEpoch(epoch) {
-        var date = new Date(parseFloat(epoch + "000"));
-        var readableDate = date.getMonth() + 1 + "." +
-            date.getDate() + "." +
-            date.getFullYear();
-        var hoursRaw = date.getHours();
-        var hours = ((hoursRaw+11) % 12) + 1;
-        var amPm = date.getHours() > 11 ? 'PM' : 'AM';
-        var rawMin = date.getMinutes();
-        var minutes = rawMin > 9 ? rawMin : '0' + rawMin;
-        var readableTime = hours + ":" + minutes + amPm;
-
-        var weekdayShort = new Array(7);
-        weekdayShort[0]=  "Sun";
-        weekdayShort[1] = "Mon";
-        weekdayShort[2] = "Tues";
-        weekdayShort[3] = "Wed";
-        weekdayShort[4] = "Thurs";
-        weekdayShort[5] = "Fri";
-        weekdayShort[6] = "Sat";
-
-        var weekdayLong = new Array(7);
-        weekdayLong[0]=  "SUNDAY";
-        weekdayLong[1] = "MONDAY";
-        weekdayLong[2] = "TUESDAY";
-        weekdayLong[3] = "WEDNESDAY";
-        weekdayLong[4] = "THURSDAY";
-        weekdayLong[5] = "FRIDAY";
-        weekdayLong[6] = "SATURDAY";
-
-        var dateTime = new Object();
-        dateTime['date'] = readableDate;
-        dateTime['time'] = readableTime;
-        dateTime['hours'] = hours + amPm;
-        dateTime['dayShort'] = weekdayShort[date.getDay()];
-        dateTime['dayLong'] = weekdayLong[date.getDay()];
-
-        return dateTime;
-      }
-
-      function displayLocation(usingGeolocation) {
-
-        if (usingGeolocation) {
-          var geocoder = new google.maps.Geocoder();
-          var latlng = new google.maps.LatLng(lati,longi);
-
-          geocoder.geocode({'latLng': latlng}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-
-              var cityFound = false;
-              var stateFound = false;
-              var cityName = "";
-              var stateName = "";
-
-              for (var i = 0; i < results.length; i++) {
-                for (var j = 0; j < results[i].address_components.length; j++) {
-                  for (var k = 0; k < results[i].address_components[j].types.length; k++) {
-                    if (results[i].address_components[j].types[k] === 'locality') {
-                      cityName = results[i].address_components[j].long_name;
-                      cityFound = true;
-                    }
-                    if (results[i].address_components[j].types[k] === 'administrative_area_level_1') {
-                      stateName = results[i].address_components[j].short_name;
-                      stateFound = true;
-                    }
-                  }
-                }
-              }
-              if (cityFound) {
-                loc_name = cityName;
-                if (stateFound && cityName !== stateName) {
-                  loc_name += ", " + stateName;
-                }
-              } else {
-                loc_name = "";
-              }
-            } else {
-              console.log("Reverse Geocode failed.");
-              loc_name = "";
-            }
-            document.getElementById("LocationName").innerHTML = loc_name;
-          });
-        } else {
-          document.getElementById("LocationName").innerHTML = loc_name;
-        }
-      }
-
-      function displayBackground(icon) {
-
-        var backgrounds = new Object();
-        backgrounds['clear-day'] = '../../img/weather/clear-day.jpg';
-        backgrounds['clear-night'] = '../../img/weather/clear-night.jpg';
-        backgrounds['rain'] = '../../img/weather/rain_2.jpg';
-        backgrounds['snow'] = '../../img/weather/snow.jpg';
-        backgrounds['sleet'] = '../../img/weather/snow.jpg';
-        backgrounds['wind'] = '../../img/weather/cloudy_1.jpg';
-        backgrounds['fog'] = '../../img/weather/cloudy_1.jpg';
-        backgrounds['cloudy'] = '../../img/weather/cloudy_1.jpg';
-        backgrounds['partly-cloudy-day'] = '../../img/weather/cloudy_1.jpg';
-        backgrounds['partly-cloudy-night'] = '../../img/weather/night.jpg';
-
-        $('body').css('backgroundImage', 'url(' + backgrounds[icon] + ')');
-      }
-
-      function displayCurrently(currRaw, dailyRaw) {
-        var dateTime = convertEpoch(currRaw.time);
-        var currIcon = currRaw.icon;
-        var currTime = dateTime['dayLong'] + " " + dateTime['date'];
-        var currSummary = currRaw.summary;
-        var currTemp = Math.round(currRaw.temperature) + '&#176;F';
-        var currAppTemp = Math.round(currRaw.apparentTemperature*10)/10 + '&#176;F';
-        var currPrecipProbInt = Math.round(currRaw.precipProbability * 100);
-        var currPrecipProb = currPrecipProbInt + '%';
-        var currPrecipIntensity = Math.round(currRaw.precipIntensity*1000)/1000;
-        var currPrecipType = (currPrecipProbInt > 0) ? currRaw.precipType : "none";
-        var currWindSpeed = Math.round(currRaw.windSpeed*100)/100 + "MPH";
-        var sunriseTime = convertEpoch(dailyRaw.sunriseTime)['time'];
-        var sunsetTime = convertEpoch(dailyRaw.sunsetTime)['time'];
-
-        skycons.set( 'Curr_WeatherIcon', currIcon);
-
-        document.getElementById("Curr_DateTime").innerHTML = currTime;
-        document.getElementById("Curr_Summary").innerHTML = currSummary;
-        document.getElementById("Curr_Temp").innerHTML = currTemp;
-
-        document.getElementById("Curr_ApparentTempLabel").innerHTML = "Feels like: ";
-        document.getElementById("Curr_ApparentTemp").innerHTML = currAppTemp;
-
-        document.getElementById("Curr_PrecipProbLabel").innerHTML = "Precipitation: ";
-        document.getElementById("Curr_PrecipProb").innerHTML = currPrecipProb;
-
-        if (currPrecipProbInt > 0) {
-          document.getElementById("Curr_PrecipTypeLabel").innerHTML = "  Type: ";
-          document.getElementById("Curr_PrecipType").innerHTML = currPrecipType;
-
-          document.getElementById("Curr_PrecipIntensityLabel").innerHTML = "  Intensity: ";
-          document.getElementById("Curr_PrecipIntensity").innerHTML = currPrecipIntensity;
-        }
-        document.getElementById("Curr_WindSpeedLabel").innerHTML = "Wind Speed: ";
-        document.getElementById("Curr_WindSpeed").innerHTML = currWindSpeed;
-
-        document.getElementById("SunRiseSetTimeLabel").innerHTML = "Sunrise | Sunset: ";
-        document.getElementById("SunRiseSetTime").innerHTML = sunriseTime + " | " + sunsetTime;
-      }
-
-      function displayHourly(hourlyRaw) {
-        var hourlyHourArray = new Array();
-        var hourlyTempArray = new Array();
-        var hourlyPrecipProbArray = new Array();
-        var hourlyPrecipTypeArray = new Array();
-
-        for (var i = 0; i <= 21; i=i+3) {
-          hourlyHourArray.push(convertEpoch(hourlyRaw[i].time)['hours']);
-          hourlyTempArray.push(Math.round(hourlyRaw[i].apparentTemperature) + '&#176;F');
-          var hourlyPrecipProb = Math.round(hourlyRaw[i].precipProbability * 100);
-          hourlyPrecipTypeArray.push((hourlyPrecipProb > 0) ? hourlyRaw[i].precipType : "none");
-          hourlyPrecipProb += '%';
-          hourlyPrecipProbArray.push(hourlyPrecipProb);
-        }
-
-        var r = new Array(), j = -1;
-        r[++j] = '<tr>';
-        for (var i = 0; i < hourlyHourArray.length; i++) {
-          r[++j] = '<td id="tableHead">' + hourlyHourArray[i] + '</td>';
-        }
-        r[++j] = '</tr><tr>';
-        for (var i = 0; i < hourlyTempArray.length; i++) {
-          r[++j] = '<td>' + hourlyTempArray[i] + '</td>';
-        }
-        r[++j] = '</tr><tr>';
-        for (var i = 0; i < hourlyPrecipProbArray.length; i++) {
-          r[++j] = '<td>' + hourlyPrecipProbArray[i] + '</td>';
-        }
-        r[++j] = '</tr>';
-        $('#hourlyConditions').html(r.join(''));
-      }
-
-      function displayDaily(dailyRaw) {
-        var dailyDayArray = new Array();
-        var dailyIconArray = new Array();
-        var dailyTempHighArray = new Array();
-        var dailyTempLowArray = new Array();
-        var dailyPrecipProbArray = new Array();
-        var dailyPrecipTypeArray = new Array();
-
-        for (var i = 0; i < dailyRaw.length; i++) {
-          dailyDayArray.push(convertEpoch(dailyRaw[i].time)['dayShort']);
-          dailyIconArray.push(dailyRaw[i].icon);
-          dailyTempHighArray.push(Math.round(dailyRaw[i].apparentTemperatureMax) + '&#176;F');
-          dailyTempLowArray.push(Math.round(dailyRaw[i].apparentTemperatureMin) + '&#176;F');
-          var dailyPrecipProb = Math.round(dailyRaw[i].precipProbability * 100);
-          dailyPrecipTypeArray.push((dailyPrecipProb > 0) ? dailyRaw[i].precipType : "none");
-          dailyPrecipProb += '%';
-          dailyPrecipProbArray.push(dailyPrecipProb);
-        }
-
-        var DAILY_ICON_TEXT = "dailyIcon";
-        var dailyArrayLength = dailyDayArray.length;
-
-        var r = new Array(), j = -1;
-        r[++j] = '<tr>';
-        for (var i = 0; i < dailyArrayLength; i++) {
-          r[++j] = '<td id="tableHead">' + dailyDayArray[i] + '</td>';
-        }
-        r[++j] = '</tr><tr>';
-        for (var i = 0; i < dailyArrayLength; i++) {
-          r[++j] = '<td><canvas id="' + DAILY_ICON_TEXT + i + '"width="50" height="50"></canvas></td>';
-        }
-        r[++j] = '</tr><tr>';
-        for (var i = 0; i < dailyArrayLength; i++) {
-          r[++j] = '<td>' + dailyTempHighArray[i] + " | " + dailyPrecipProbArray[i] + '</td>';
-        }
-        r[++j] = '</tr>';
-        $('#dailyConditions').html(r.join(''));
-
-        for (var i = 0; i < dailyArrayLength; i++) {
-          skycons.set(DAILY_ICON_TEXT+i, dailyIconArray[i]);          
-        }
-      }
-
-    </script>
+    <p class="hide" id="useGeolocation">YES</p>
+    <!--  Error Notifications  -->
+    <div id="error_dialog" title="Error"></div>
+    <!--  End Error Notifications  -->
 
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6 col-md-6">
-          <h3 class="text-left" id="LocationName"></h3>
+          <h3 class="text-left" id="locationName"></h3>
         </div>
         <div class="col-sm-6 col-md-6">
-          <h3 class="text-right" id="Curr_DateTime"> </h3>
+          <h3 class="text-right" id="currDateTime"> </h3>
         </div>
       </div>
     </div>
 
     <div class="container">
-      <div class="row" id="Currently">
+      <div class="row" id="currently">
 
         <div class="col-md-1">
         </div>
 
         <div class="col-md-3">
-          <canvas id="Curr_WeatherIcon" display="inline" width="200" height="200"></canvas>
+          <canvas id="currWeatherIcon" display="inline" width="200" height="200"></canvas>
         </div>
 
         <div class="col-md-8">
           <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-5">
-              <p class="text-left" id="Curr_Summary"></p>
+              <p id="currSummary"></p>
             </div>
           </div>
 
           <div class="col-md-4">
-            <h1 class="text-center" id="Curr_Temp"></p>
+            <h1 class="text-center" id="currTemp"></p>
           </div>
 
-          <div class="col-xs-6 col-md-3">
-            <p id="Curr_ApparentTempLabel"></p>
-            <p id="Curr_PrecipProbLabel"></p>
-            <p id="Curr_PrecipTypeLabel"></p>
-            <p id="Curr_PrecipIntensityLabel"></p>
-            <p id="Curr_WindSpeedLabel"></p>
-            <p id="SunRiseSetTimeLabel"></p>
+          <div class="col-xs-6 col-md-3" style="text-align: right">
+            <p id="currApparentTempLabel">Feels like: </p>
+            <p id="currPrecipProbLabel">Precipitation: </p>
+            <p id="currPrecipTypeLabel"></p>
+            <p id="currPrecipIntensityLabel"></p>
+            <p id="currWindSpeedLabel">Wind Speed: </p>
+            <p id="sunRiseSetTimeLabel">Sunrise | Sunset: </p>
           </div>
 
-          <div class="col-xs-6 col-md-5">
-            <p id="Curr_ApparentTemp"></p>
-            <p id="Curr_PrecipProb"></p>
-            <p id="Curr_PrecipType"></p>
-            <p id="Curr_PrecipIntensity"></p>
-            <p id="Curr_WindSpeed"></p>
-            <p id="SunRiseSetTime"></p>
+          <div class="col-xs-6 col-md-5" style="text-align: left">
+            <p id="currApparentTemp"></p>
+            <p id="currPrecipProb"></p>
+            <p id="currPrecipType"></p>
+            <p id="currPrecipIntensity"></p>
+            <p id="currWindSpeed"></p>
+            <p id="sunRiseSetTime"></p>
           </div>
         </div>
       </div> <!-- End Currently -->
-      
+
       <div id="Hourly">
-        <h3 class="text-center">HOURLY   CONDITIONS</h3>
+        <h3 class="text-center">HOURLY CONDITIONS</h3>
           <table class="tableDisplay" id="hourlyConditions"></table>
       </div> <!-- End Hourly -->
 
       <div id="Daily">
-        <h3 class="text-center">DAILY   FORECAST</h3>
+        <h3 class="text-center">DAILY FORECAST</h3>
         <table class="tableDisplay" id="dailyConditions"></table>
       </div> <!-- End Daily -->
 
@@ -483,18 +110,3 @@
 
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
