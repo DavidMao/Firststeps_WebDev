@@ -1,0 +1,157 @@
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* ////////////////////////////////////////////////////////////
+// Header and Footer
+//////////////////////////////////////////////////////////// */
+
+#header {
+  background-color: rgba(105,100,100,0.5);
+  padding: 30px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+#logo-holder {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+
+#logo {
+  width: 200px;
+}
+
+#header-text-wrapper {
+  border-left: 1px solid #ffffff;
+  height: 90px;
+
+  /* Centers elements */
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+}
+
+#header-description {
+  color: #ffffff;
+  font-weight: 200;
+  font-size: 1.5rem;
+  margin-bottom: 0px;
+  padding-left: 14px;
+}
+
+#footer {
+  border-top: 1px solid #808080;
+  color: #808080;
+  font-size: 0.8rem;
+  padding: 15px 15px 0px 15px;
+  text-align: center;
+}
+
+/* ////////////////////////////////////////////////////////////
+// Slideshow
+//////////////////////////////////////////////////////////// */
+
+.slideshow-wrapper {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  -webkit-transition: opacity 1s linear;
+  -moz-transition: opacity 1s linear;
+  -ms-transition: opacity 1s linear;
+  -o-transition: opacity 1s linear;
+  transition: opacity 1s linear;
+}
+
+.slideshow-wrapper > .slide:first-child {
+   opacity: 1;
+}
+
+/* ////////////////////////////////////////////////////////////
+// Instagram Section
+//////////////////////////////////////////////////////////// */
+
+#instagramFeed {
+  padding-bottom: 50px;
+}
+
+#ig-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 15px;
+/*  text-align:center;*/
+}
+
+#ig-logo {
+  height: auto;
+  width: auto;
+  max-width: 100px;
+  max-height: 100px;
+}
+
+#ig-handle {
+  text-align: center;
+  font-weight:200;
+  margin-bottom: 2px;
+}
+
+/* ////////////////////////////////////////////////////////////
+// Resizing and Other
+//////////////////////////////////////////////////////////// */
+
+
+
+@media all and (max-width: 700px) {
+  #header {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+  
+  #header-text-wrapper {
+    border-left: none;
+    display: block;
+  }
+  
+  #header-description {
+    text-align: center;
+    padding-top: 30px;
+  }
+}
+
+@media all and (max-width: 300px) {
+  #header {
+    padding-bottom: 30px;
+  }
+  
+  #header-description {
+    padding-top: 10px;
+    font-size: 1rem;
+  }
+}

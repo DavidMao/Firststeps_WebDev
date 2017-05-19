@@ -22,14 +22,17 @@ http.createServer(function(request, response) {
     case '/home':
       filename = __dirname + '/src/index.html';
     break;
-    case '/weather':
-      filename = __dirname + '/src/weather/weather.html';
-    break;
     case '/myweather':
       filename = __dirname + '/src/weather/myWeather.html';
     break;
+    case '/photography':
+      filename = __dirname + '/src/photopage/photopage.html';
+    break;
     case '/resume':
       filename = __dirname + '/src/homepage/DavidMao_Resume.pdf';
+    break;
+    case '/weather':
+      filename = __dirname + '/src/weather/weather.html';
     break;
     default:
       filename = __dirname + uri;
