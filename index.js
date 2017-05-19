@@ -26,7 +26,7 @@ http.createServer(function(request, response) {
       filename = __dirname + '/src/weather/myWeather.html';
     break;
     case '/photography':
-      filename = __dirname + '/src/photopage/photopage.html';
+      filename = __dirname + '/src/photopage.html';
     break;
     case '/resume':
       filename = __dirname + '/src/homepage/DavidMao_Resume.pdf';
