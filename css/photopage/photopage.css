@@ -125,7 +125,9 @@ a:hover {
 // Resizing and Other
 //////////////////////////////////////////////////////////// */
 
-
+#blurb {
+  margin-top: 50px;
+}
 
 @media all and (max-width: 700px) {
   #header {
