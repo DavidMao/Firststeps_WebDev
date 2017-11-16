@@ -21,6 +21,7 @@
 
   <!-- js -->
   <script src="../js/photopage/photopage.js"></script>
+  <script src="../js/common/countup/countup.js"></script>
 
   <!-- css -->
   <link rel="stylesheet" href="../css/photopage/photopage.css"> 
@@ -49,23 +50,74 @@
     <div class="row" id="blurb">
       <div class="col-md-10 mx-auto">
         <p>Photography enthusiast based in Seattle. My main areas of interest are creative portraiture and landscape photography. I love wandering and exploring new areas that I haven't seen, both around the world and in Seattle. I'm also a huge camera gear head.</p>
-        <p>If you're interested, check out my photos on Instagram! The feed below contains some of the recent pictures I've taken. Please reach out if you want to shoot together!</p>
+
+        <p>Here are 2 photos that I'm particularly proud of:</p>
+
+        <div class="row" style="margin-top: 40px">
+          <div class="col-md-6 photo-title">
+            <h2>A Day's Hard Work</h2>
+          </div>
+        </div>
+
+        <div class="row" id="tulips-section">
+          <div class="col-md-6 project-img">
+            <a href="https://www.instagram.com/p/BEbhbqNlSZG/?taken-by=itsdavo" class="lighten" target="_blank">
+              <img src="../img/photopage/photostats/TulipIG.JPG">
+            </a>
+          </div>
+
+          <div class="col-md-6" id="tulip-stats">
+            <p style="margin-bottom: 0px">Skagit Valley Tulip Festival in April 2016. I spent quite a bit of effort planning this shot--I went to Home Depot to get the paint color-matched and cut/shaped the mop to look like a paintbrush.</p>
+
+            <p class="photo-stats"><a class="stat" id="tulip-repost-count">0</a>+ reposts</p>
+            <p class="photo-stats"><a class="stat" id="tulip-follower-count">0</a>M+ total followers on all pages</p>
+            <p class="photo-stats"><a class="stat" id="tulip-like-count">0</a>K+ total likes</p>
+
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 30px">
+          <div class="col-md-6 photo-title">
+            <h2>Sunday Mornings</h2>
+          </div>
+        </div>
+        <div class="row" id="morning-section">
+          <div class="col-md-6 project-img">
+            <a href="https://unsplash.com/photos/m0l5J8Lqnzo" class="lighten" target="_blank">
+              <img src="../img/photopage/photostats/Morning.jpg">
+            </a>
+          </div>
+
+          <div class="col-md-6" id="morning-stats">
+            <p style="margin-bottom: 0px">I uploaded this to <a href="https://unsplash.com/photos/m0l5J8Lqnzo" target="_blank">unsplash.com</a>, a website with over 300,000 free-to-use photos. At one point, it was the 12th most downloaded photo on the site, and has been featured by Buzzfeed.</p>
+
+            <p class="photo-stats"><a class="stat" id="morning-view-count">0</a>M+ views</p>
+            <p class="photo-stats"><a class="stat" id="morning-download-count">0</a>K+ downloads</p>
+
+          </div>
+        </div>
+
+        <p style="margin-top: 40px">If you're interested, check out my photos on Instagram! The feed below contains some of the recent pictures I've taken. Please reach out if you want to shoot together!</p>
       </div>
     </div>
+
     <div class="row" id="ig-header">
       <a href="http://www.instagram.com/itsdavo" target="_blank">
         <img id="ig-logo" src="../img/icons/Instagram-logo.png" alt=""/>
       </a>
-      <h2 id="ig-handle">
+      <h1 id="ig-handle">
         <a href="http://www.instagram.com/itsdavo" target="_blank">@itsdavo</a>
-      </h2>
+      </h1>
     </div>
+
     <!--  Instagram Feed -->
     <div class="row" id="instagramFeed">
       <script src="//lightwidget.com/widgets/lightwidget.js"></script><iframe src="//lightwidget.com/widgets/c07be59f912d55dc820178622d7e34f1.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width: 100%; border: 0; overflow: hidden;"></iframe>
     </div>
+
     <div id="footer">
       <p>Slideshow photos compressed using <a style="color:#0275d8" href="https://github.com/google/guetzli" target="_blank"> Google Guetzli</a> JPEG encoder. Check it out--it's pretty incredible.</p>
+      <p><a href="../">Homepage</a></p>
     </div>
   </div>
 </body>
