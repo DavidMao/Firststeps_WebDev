@@ -191,7 +191,7 @@ var weather = (function(self, $) {
     backgrounds['partly-cloudy-day'] = '../../img/weather/cloudy_1.jpg';
     backgrounds['partly-cloudy-night'] = '../../img/weather/night.jpg';
 
-    $('body').css('backgroundImage', 'url(' + backgrounds[icon] + ')');
+    $('.background').css('backgroundImage', 'url(' + backgrounds[icon] + ')');
   }
 
   function displayCurrently(currRaw, dailyRaw) {
