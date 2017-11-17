@@ -90,7 +90,7 @@ var photopage = (function(self, $) {
       console.error(tulipLikeCountAnim.error);
     }
 
-    var morningViewCountAnim = new CountUp("morning-view-count", 0, 9.9, 1, 4);
+    var morningViewCountAnim = new CountUp("morning-view-count", 0, 10, 0, 4);
     if (!morningViewCountAnim.error) {
       morningViewCountAnim.start();
     } else {
